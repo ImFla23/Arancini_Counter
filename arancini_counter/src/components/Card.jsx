@@ -31,7 +31,6 @@ export default function Card() {
   useEffect(() => {
     async function arancinoUpdate() {
       try {
-        if (arancino === 0) return;
         await databases.updateDocument(
           DATABASE_ID,
           ARANCINI_TABLE,
