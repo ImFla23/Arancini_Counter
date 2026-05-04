@@ -1,4 +1,4 @@
-export default function arancino() {
+export default function Arancino() {
   return (
     <svg
       viewBox="0 0 80 90"

@@ -1,8 +1,8 @@
-import Card from "./components/card";
-import { functions } from "../database/appwrite";
+import Card from "./components/Card.jsx";
+import { functions } from "../database/appwrite.js";
 import { Send } from "lucide-react";
 import { useState } from "react";
-import Arancino from "./assets/arancino";
+import Arancino from "./assets/Arancino.jsx";
 
 const idSendEmailFunction = import.meta.env.VITE_SEND_EMAIL_FUNCTION_ID;
 

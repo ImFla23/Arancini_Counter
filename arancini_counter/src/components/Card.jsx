@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { databases } from "../../database/appwrite";
+import { databases } from "../../database/appwrite.js";
 import { useEffect } from "react";
-import Arancino from "../assets/arancino";
+import Arancino from "../assets/Arancino.jsx";
 
 export default function Card() {
   let [arancino, setArancino] = useState(0);
