@@ -1,33 +1,51 @@
 name: Deploy Arancino App
+
 on:
   push:
     branches: ["main"]
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: arancini_counter # <--- DICIAMOGLI DI ENTRARE QUI
+        working-directory: arancini_counter
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: arancini_counter/package-lock.json # Percorso per la cache
-      - run: npm ci
-      - run: npm run build
+          cache-dependency-path: arancini_counter/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
         env:
+          # Mappatura di tutte le tue variabili d'ambiente
+          VITE_APPWRITE_PROJECT_ID: ${{ secrets.VITE_APPWRITE_PROJECT_ID }}
+          VITE_APPWRITE_PROJECT_NAME: ${{ secrets.VITE_APPWRITE_PROJECT_NAME }}
+          VITE_APPWRITE_ENDPOINT: ${{ secrets.VITE_APPWRITE_ENDPOINT }}
+          VITE_DATABASE_ID: ${{ secrets.VITE_DATABASE_ID }}
+          VITE_ARANCINI_TABLE_ID: ${{ secrets.VITE_ARANCINI_TABLE_ID }}
+          VITE_DOCUMENT_MANGIATI_ID: ${{ secrets.VITE_DOCUMENT_MANGIATI_ID }}
           VITE_SEND_EMAIL_FUNCTION_ID: ${{ secrets.VITE_SEND_EMAIL_FUNCTION_ID }}
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Dobbiamo caricare la cartella dist che sta DENTRO arancini_counter
           path: ./arancini_counter/dist
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -35,5 +53,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
