@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "appwrite": "^25.0.0",
+    "lucide-react": "^1.14.0",
     "node-appwrite": "^24.0.0",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "resend": "^6.12.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
